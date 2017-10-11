@@ -3,9 +3,10 @@ import Time exposing (Time)
 
 type Msg = Tick Time
 
-type alias Model = {
-    count: Int
+type alias Model =
+  { count: Int
+  , grid: List (List Bool)
   }
 
 model : Model
-model = Model 0
+model = Model 0 []

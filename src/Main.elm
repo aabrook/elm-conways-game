@@ -16,7 +16,7 @@ type alias Model ={
 init : ( Model, Cmd Msg )
 init =
   let
-      (cmodel, cmsg) = CS.init
+      (cmodel, cmsg) = CS.init 10 10
   in
     ( Model cmodel, Cmd.batch [Cmd.map Conway cmsg] )
 
