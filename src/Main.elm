@@ -13,10 +13,16 @@ type alias Model ={
     conway: CT.Model
   }
 
+isEven : Int -> Bool
+isEven n = n % 2 == 0
+
+gridGenerator : Int -> Int -> Bool
+gridGenerator height width = (isEven height) == (isEven width)
+
 init : ( Model, Cmd Msg )
 init =
   let
-    (cmodel, cmsg) = CS.init (always <| always True) 10 10
+    (cmodel, cmsg) = CS.init gridGenerator 10 10
   in
     ( Model cmodel, Cmd.batch [Cmd.map Conway cmsg] )
 
@@ -41,9 +47,7 @@ update msg model =
 view : Model -> Html Msg
 view { conway } =
   div []
-    [ img [ src "/logo.svg" ] []
-    , div [] [ text "Your Elm App is working!" ]
-    , Html.map Conway <| CV.view conway
+    [ Html.map Conway <| CV.view conway
     ]
 
 subscriptions : Model -> Sub Msg

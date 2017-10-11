@@ -18,4 +18,4 @@ subscriptions model =
 
 prepareGrid : (Int -> Int -> Bool) -> Int -> Int -> List (List Bool)
 prepareGrid gen height width =
-  List.repeat height (List.repeat width <| gen height width)
+  List.map (\x -> (List.map (\y -> gen x y) <| List.range 0 width)) (List.range 0 height)
