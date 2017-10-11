@@ -4,8 +4,8 @@ import Conway.Types exposing (..)
 
 import Time exposing (Time, second)
 
-init : Int -> Int -> (Model, Cmd Msg)
-init height width = ({ model | grid = prepareGrid height width }, Cmd.none)
+init : (Int -> Int -> Bool) -> Int -> Int -> (Model, Cmd Msg)
+init gen height width = ({ model | grid = prepareGrid gen height width }, Cmd.none)
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -16,6 +16,6 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
   Time.every second Tick
 
-prepareGrid : Int -> Int -> List (List Bool)
-prepareGrid height width =
-  List.repeat height (List.repeat width True)
+prepareGrid : (Int -> Int -> Bool) -> Int -> Int -> List (List Bool)
+prepareGrid gen height width =
+  List.repeat height (List.repeat width <| gen height width)
