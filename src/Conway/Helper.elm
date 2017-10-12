@@ -9,7 +9,7 @@ prepareGrid gen height width =
 
 tickState : Grid Bool -> Grid Bool
 tickState grd =
-  grd |> neighbourCount |> Array.map (Array.map isDead)
+  grd |> neighbourCount |> Array.map (Array.map isAlive)
 
 neighbourCount : Grid Bool -> Grid (Bool, Int)
 neighbourCount grd =
@@ -35,11 +35,11 @@ neighbourCount grd =
   in
     Array.indexedMap (\y row -> Array.indexedMap (\x c -> (c, neighbours x y)) row) grd
 
-isDead : (Bool, Int) -> Bool
-isDead (dead, neighbours) =
+isAlive: (Bool, Int) -> Bool
+isAlive (alive, neighbours) =
   case neighbours of
     0 -> False
     1 -> False
-    2 -> dead
+    2 -> alive
     3 -> True
     _ -> False
