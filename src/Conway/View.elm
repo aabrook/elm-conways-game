@@ -4,13 +4,20 @@ import Html exposing (Html, table, td, tr, text, div, img)
 import Html.Attributes exposing (style)
 import Array exposing (Array)
 
-import Conway.Types exposing (Grid, Model, Msg)
+import Conway.Types exposing (..)
 
 view : Model -> Html Msg
-view { count, grid } = div [] [
+view { count, grid, state } = div [] [
     text <| toString count
+    , renderState state
     , renderGrid grid
   ]
+
+renderState : GenState -> Html Msg
+renderState state =
+  case state of
+    Generating -> text " - Generating"
+    Generated -> text " - Running"
 
 renderGrid : Grid Bool -> Html Msg
 renderGrid grid =

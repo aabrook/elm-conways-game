@@ -57,6 +57,7 @@ update msg model =
         { model
         | store = store
         , grid = grid
+        , state = state
         }
         , next
       )
