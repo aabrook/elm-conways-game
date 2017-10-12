@@ -1,8 +1,8 @@
 module Main exposing (..)
 
 import Html exposing (Html, text, div, img)
-import Html.Attributes exposing (src)
 
+import Random exposing (bool, Generator)
 import Conway.Types as CT exposing (Model, model)
 import Conway.View as CV exposing (view)
 import Conway.State as CS exposing (init, update)
@@ -16,8 +16,8 @@ type alias Model ={
 isEven : Int -> Bool
 isEven n = n % 2 == 0
 
-gridGenerator : Int -> Int -> Bool
-gridGenerator height width = True -- (isEven height) == (isEven width)
+gridGenerator : Int -> Int -> Generator Bool
+gridGenerator height width = bool -- (isEven height) == (isEven width)
 
 init : ( Model, Cmd Msg )
 init =

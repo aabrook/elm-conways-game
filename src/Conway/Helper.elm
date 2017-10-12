@@ -20,7 +20,7 @@ neighbourCount grd =
         Just n -> if n then 1 else 0
 
     getNeighbour x y =
-      (get (y - 1) grd) |> Maybe.andThen (\row -> get x row)
+      (get y grd) |> Maybe.andThen (\row -> get x row)
 
     n x y = getNeighbour x (y - 1)
     ne x y = getNeighbour (x + 1) (y - 1)
