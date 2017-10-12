@@ -1,8 +1,9 @@
 module Conway.Types exposing (..)
 import Time exposing (Time)
+import Array exposing (Array)
 
 type Msg = Tick Time
-type alias Grid a = List (List a)
+type alias Grid a = Array (Array a)
 
 type alias Model =
   { count: Int
@@ -10,4 +11,4 @@ type alias Model =
   }
 
 model : Model
-model = Model 0 []
+model = Model 0 <| Array.initialize 0 <| always (Array.initialize 0 (always True))
