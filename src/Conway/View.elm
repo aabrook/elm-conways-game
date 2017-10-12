@@ -8,16 +8,15 @@ import Conway.Types exposing (..)
 
 view : Model -> Html Msg
 view { count, grid, state } = div [] [
-    text <| toString count
-    , renderState state
+    renderState state
     , renderGrid grid
   ]
 
 renderState : GenState -> Html Msg
 renderState state =
   case state of
-    Generating -> text " - Generating"
-    Generated -> text " - Running"
+    Generating -> text "Generating"
+    Generated -> text "Running"
 
 renderGrid : Grid Bool -> Html Msg
 renderGrid grid =
