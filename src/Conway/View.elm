@@ -1,38 +1,49 @@
 module Conway.View exposing (view)
 
 import Html exposing (Html, table, td, tr, text, div, img)
-import Html.Attributes exposing (style)
+
+import Svg exposing (Svg, svg, rect, text)
+import Svg.Attributes exposing (fill, height, viewBox, width, scale, x, y, rx, ry)
+
 import Array exposing (Array)
 
 import Conway.Types exposing (..)
 
 view : Model -> Html Msg
-view { count, grid, state } = div [] [
+view { height, scale, count, grid, state } = div [] [
     renderState state
-    , renderGrid grid
+    , Html.br [] []
+    , renderGrid height scale grid
   ]
 
 renderState : GenState -> Html Msg
 renderState state =
   case state of
-    Generating -> text "Generating"
-    Generated -> text "Running"
+    Generating -> Html.text "Generating"
+    Generated -> Html.text "Running"
 
-renderGrid : Grid Bool -> Html Msg
-renderGrid grid =
-  table [tableStyle] (Array.toList <| Array.map renderRow grid)
+renderGrid : Int -> Int -> Grid Bool -> Html Msg
+renderGrid dimension scale grid =
+  svg (svgStyle dimension scale) (Array.toList <| Array.indexedMap (renderRow dimension scale) grid)
 
-renderRow : Array Bool -> Html Msg
-renderRow row =
+renderRow : Int -> Int -> Int -> Array Bool -> Svg Msg
+renderRow dimension scale yPos row =
   let
-    which n =
+    yp = toString <| scale * yPos
+    d = dimension * scale
+    dx = (toFloat d) / (toFloat <| Array.length row) |> toString
+    which xPos n =
       case n of
-        True -> td [] [text "."]
-        False -> td [] [text " "]
+        True -> rect [height dx, width dx, x <| toString <| scale * xPos, y yp, fill "#000"] []
+        False -> rect [height dx, width dx, x <| toString <| scale * xPos, y yp, fill "#FFF"] []
   in
-    Array.map (which) row
+    Array.indexedMap which row
     |> Array.toList
-    |> tr []
+    |> svg []
 
-tableStyle : Html.Attribute msg
-tableStyle = style [ ("border", "1px solid black"), ("width", "100%") ]
+svgStyle : Int -> Int -> List (Svg.Attribute a)
+svgStyle h scale =
+  let
+    dx = toString <| h * scale
+  in
+    [height dx, width dx, viewBox dx]

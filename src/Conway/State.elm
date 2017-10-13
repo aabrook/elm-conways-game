@@ -7,13 +7,14 @@ import Array
 import Time exposing (Time, millisecond)
 import Random exposing (generate, Generator)
 
-init : (Int -> Int -> Generator Bool) -> Int -> Int -> (Model, Cmd Msg)
-init gen height width = ({
+init : Generator Bool -> Int -> Int -> Int -> (Model, Cmd Msg)
+init gen height width scale = ({
   model
   | height = height
   , width = width
-  , generator = gen height width
-  }, generate Gen <| gen height width)
+  , scale = scale
+  , generator = gen
+  }, generate Gen gen)
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =

@@ -12,6 +12,7 @@ type alias Model =
   { count: Int
   , height: Int
   , width: Int
+  , scale: Int
   , grid: Grid Bool
   , state: GenState
   , store: List Bool
@@ -21,6 +22,7 @@ type alias Model =
 model : Model
 model =
   Model
+  0
   0
   0
   0

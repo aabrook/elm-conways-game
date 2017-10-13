@@ -16,13 +16,13 @@ type alias Model ={
 isEven : Int -> Bool
 isEven n = n % 2 == 0
 
-gridGenerator : Int -> Int -> Generator Bool
-gridGenerator height width = bool -- (isEven height) == (isEven width)
+gridGenerator : Generator Bool
+gridGenerator = bool -- (isEven height) == (isEven width)
 
 init : ( Model, Cmd Msg )
 init =
   let
-    (cmodel, cmsg) = CS.init gridGenerator 50 50
+    (cmodel, cmsg) = CS.init gridGenerator 70 70 5
   in
     ( Model cmodel, Cmd.batch [Cmd.map Conway cmsg] )
 
